@@ -1,0 +1,26 @@
+#INSTALLING CRON
+sudo apt install cron
+
+#After installing, you can start and enable the cron service using:
+sudo systemctl start cron
+sudo systemctl enable cron
+
+Once cron is installed, you can use crontab -e to set up your cron jobs.
+Open the crontab file:
+crontab -e
+Add the following cron job to run your script every minute:
+* * * * * /home/ubuntu/script.sh > /home/ubuntu/script_output.log 2>&1
+Save and exit the editor.
+This will execute script.sh every minute and redirect both standard output and errors to script_output.log.
+
+*/2 * * * * /home/ubuntu/script.sh > /home/ubuntu/script_output.log 2>&1
+This configuration will run your script (script.sh) every 2 minutes and log the output to script_output.log.
+The command */2 * * * * /home/ubuntu/script.sh > /home/ubuntu/my_log_file.log 2>&1 does the following:
+
+Schedules the script: It runs /home/ubuntu/script.sh every two minutes.
+Redirects output: Standard output (stdout) is written to my_log_file.log.
+Captures errors: Standard error (stderr) is also redirected to the same log file, combining both output and error messages in one place.
+This setup helps you track both normal and error outputs from your script.
+With 2>&1: Both standard output (stdout) and standard error (stderr) go to the same log file. This means you’ll capture all messages, including errors.
+Without 2>&1: Only standard output will be logged. Standard error messages will not appear in your log file, making it harder to diagnose issues 
+if the script fails.
